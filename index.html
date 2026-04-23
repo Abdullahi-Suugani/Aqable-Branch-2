@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqable Branch 2 - Your Trusted Pharmacy</title>
+    <meta name="description" content="Aqable Branch 2 - Affordable medicines and healthcare products in your area.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pharmacy: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; }
+        
+        /* Custom scrollbar matching theme */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f0fdf4; }
+        ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #15803d; }
+        
+        /* Glass effect for navbar */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+    </style>
+</head>
+<body class="bg-white text-pharmacy-950 antialiased selection:bg-pharmacy-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav border-b border-pharmacy-100 shadow-[0_4px_30px_rgba(22,163,74,0.1)] transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-pharmacy-600 rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-pharmacy-600/30 group-hover:bg-pharmacy-700 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <span class="font-bold text-2xl text-pharmacy-900 tracking-tight group-hover:text-pharmacy-700 transition-colors">Aqable Branch 2</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Home</a>
+                    <a href="#products" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Products</a>
+                    <a href="#services" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Services</a>
+                    <a href="#about" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">About</a>
+                    <a href="#contact" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <button class="relative p-2 text-pharmacy-800 hover:text-pharmacy-600 transition-colors focus:outline-none" aria-label="Cart">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span id="cart-counter" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-pharmacy-600 rounded-full shadow-sm transition-transform duration-200">
+                            0
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="relative p-2 mr-2 text-pharmacy-800 hover:text-pharmacy-600 transition-colors focus:outline-none" aria-label="Cart">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span id="mobile-cart-counter" class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-pharmacy-600 rounded-full transition-transform duration-200">
+                            0
+                        </span>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-pharmacy-800 hover:text-pharmacy-600 focus:outline-none bg-pharmacy-50 rounded-lg p-2 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-pharmacy-100 shadow-[0_10px_20px_rgba(22,163,74,0.1)] absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#home" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Home</a>
+                <a href="#products" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Products</a>
+                <a href="#services" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Services</a>
+                <a href="#about" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">About</a>
+                <a href="#contact" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-br from-white to-pharmacy-50">
+        <!-- Decor pattern -->
+        <div class="absolute inset-0 opacity-[0.03]">
+            <svg class="absolute right-0 top-0 transform translate-x-1/3 -translate-y-1/4" width="404" height="404" fill="none" viewBox="0 0 404 404" aria-hidden="true">
+                <defs><pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="4" height="4" class="text-pharmacy-900" fill="currentColor"></rect></pattern></defs>
+                <rect width="404" height="404" fill="url(#dots)"></rect>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
+                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left reveal active">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white text-pharmacy-700 font-semibold text-sm shadow-sm mb-6 border border-pharmacy-200">
+                        <span class="flex h-2.5 w-2.5 relative mr-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pharmacy-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-pharmacy-500"></span>
+                        </span>
+                        Open 24/7 in Your Area
+                    </div>
+                    <h1 class="text-4xl tracking-tight font-extrabold text-pharmacy-950 sm:text-5xl md:text-6xl lg:leading-tight">
+                        Your <span class="text-pharmacy-600">Trusted</span> <br> Pharmacy
+                    </h1>
+                    <p class="mt-4 text-lg text-pharmacy-800 sm:mt-6 sm:text-xl md:max-w-xl mx-auto lg:mx-0">
+                        Affordable medicines and healthcare products safely delivered or picked up in-store. We care for your well-being.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
+                        <a href="#products" class="inline-flex items-center justify-center px-8 py-3.5 text-base font-bold rounded-xl text-white bg-pharmacy-600 hover:bg-pharmacy-700 shadow-lg shadow-pharmacy-600/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            Shop Now
+                            <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                        <a href="#services" class="inline-flex items-center justify-center px-8 py-3.5 text-base font-bold rounded-xl text-pharmacy-700 bg-white border-2 border-pharmacy-200 hover:border-pharmacy-400 hover:bg-pharmacy-50 transition-all duration-300">
+                            Our Services
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="mt-16 sm:mt-20 lg:mt-0 lg:col-span-6 reveal delay-200 active">
+                    <div class="relative mx-auto w-full rounded-3xl shadow-[0_20px_50px_rgba(22,163,74,0.15)] lg:max-w-lg overflow-hidden border-4 border-white z-10">
+                        <img class="w-full object-cover aspect-[4/3] transform hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1586015555751-63bb77f4322a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pharmacy interior">
+                    </div>
+                    <!-- Decorative blob bg -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-pharmacy-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-3xl font-extrabold text-pharmacy-950 sm:text-4xl">Featured Products</h2>
+                <div class="w-24 h-1.5 bg-pharmacy-500 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-4 text-lg text-pharmacy-800">High-quality medicines and essentials at the best prices.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-2xl shadow-lg border border-pharmacy-50 overflow-hidden hover:shadow-2xl hover:shadow-pharmacy-600/10 transition-all duration-300 group reveal">
+                    <div class="relative h-48 overflow-hidden bg-pharmacy-50 flex items-center justify-center p-4">
+                        <img src="https://images.unsplash.com/photo-1584308666744-24d5e4774586?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Paracetamol" class="object-cover h-full w-full rounded-xl mix-blend-multiply group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-pharmacy-900 mb-1">Paracetamol 500mg</h3>
+                        <p class="text-pharmacy-700 font-medium mb-4">Relief for pain & fever</p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="text-2xl font-extrabold text-pharmacy-600">$4.99</span>
+                            <button class="add-to-cart-btn px-4 py-2 bg-pharmacy-100 text-pharmacy-700 font-bold rounded-lg hover:bg-pharmacy-600 hover:text-white transition-colors duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white rounded-2xl shadow-lg border border-pharmacy-50 overflow-hidden hover:shadow-2xl hover:shadow-pharmacy-600/10 transition-all duration-300 group reveal delay-100">
+                    <div class="relative h-48 overflow-hidden bg-pharmacy-50 flex items-center justify-center p-4">
+                        <img src="https://images.unsplash.com/photo-1640166258908-cc124d9c4458?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Vitamin C" class="object-cover h-full w-full rounded-xl mix-blend-multiply group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-pharmacy-900 mb-1">Vitamin C 1000mg</h3>
+                        <p class="text-pharmacy-700 font-medium mb-4">Immunity booster</p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="text-2xl font-extrabold text-pharmacy-600">$12.50</span>
+                            <button class="add-to-cart-btn px-4 py-2 bg-pharmacy-100 text-pharmacy-700 font-bold rounded-lg hover:bg-pharmacy-600 hover:text-white transition-colors duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-white rounded-2xl shadow-lg border border-pharmacy-50 overflow-hidden hover:shadow-2xl hover:shadow-pharmacy-600/10 transition-all duration-300 group reveal delay-200">
+                    <div class="relative h-48 overflow-hidden bg-pharmacy-50 flex items-center justify-center p-4">
+                        <img src="https://images.unsplash.com/photo-1603398938378-e54eab446dde?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="First Aid Kit" class="object-cover h-full w-full rounded-xl mix-blend-multiply group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-pharmacy-900 mb-1">Premium First Aid Kit</h3>
+                        <p class="text-pharmacy-700 font-medium mb-4">Emergency essentials</p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="text-2xl font-extrabold text-pharmacy-600">$29.99</span>
+                            <button class="add-to-cart-btn px-4 py-2 bg-pharmacy-100 text-pharmacy-700 font-bold rounded-lg hover:bg-pharmacy-600 hover:text-white transition-colors duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="bg-white rounded-2xl shadow-lg border border-pharmacy-50 overflow-hidden hover:shadow-2xl hover:shadow-pharmacy-600/10 transition-all duration-300 group reveal delay-300">
+                    <div class="relative h-48 overflow-hidden bg-pharmacy-50 flex items-center justify-center p-4">
+                        <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Medical Mask" class="object-cover h-full w-full rounded-xl mix-blend-multiply group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-pharmacy-900 mb-1">Medical Face Masks</h3>
+                        <p class="text-pharmacy-700 font-medium mb-4">Pack of 50 masks</p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="text-2xl font-extrabold text-pharmacy-600">$8.00</span>
+                            <button class="add-to-cart-btn px-4 py-2 bg-pharmacy-100 text-pharmacy-700 font-bold rounded-lg hover:bg-pharmacy-600 hover:text-white transition-colors duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal delay-200">
+                <a href="#" class="inline-flex items-center justify-center font-bold text-pharmacy-600 hover:text-pharmacy-800 transition-colors">
+                    View All Products
+                    <svg class="ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-pharmacy-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-3xl font-extrabold text-pharmacy-950 sm:text-4xl">Our Services</h2>
+                <div class="w-24 h-1.5 bg-pharmacy-500 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-4 text-lg text-pharmacy-800">More than just a pharmacy. We provide comprehensive care.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-transparent hover:border-pharmacy-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 reveal text-center">
+                    <div class="w-16 h-16 mx-auto bg-pharmacy-100 rounded-2xl flex items-center justify-center mb-6 text-pharmacy-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-pharmacy-900 mb-3">Prescription Filling</h3>
+                    <p class="text-pharmacy-700">Quick and accurate prescription processing with automated refill reminders.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-transparent hover:border-pharmacy-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 reveal delay-100 text-center">
+                    <div class="w-16 h-16 mx-auto bg-pharmacy-100 rounded-2xl flex items-center justify-center mb-6 text-pharmacy-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-pharmacy-900 mb-3">Free Consultation</h3>
+                    <p class="text-pharmacy-700">Speak directly to our expert pharmacists regarding your medications anytime.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-transparent hover:border-pharmacy-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 reveal delay-200 text-center">
+                    <div class="w-16 h-16 mx-auto bg-pharmacy-100 rounded-2xl flex items-center justify-center mb-6 text-pharmacy-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-pharmacy-900 mb-3">Home Delivery</h3>
+                    <p class="text-pharmacy-700">Fast and secure delivery right to your doorstep for all essentials.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-transparent hover:border-pharmacy-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 reveal delay-300 text-center">
+                    <div class="w-16 h-16 mx-auto bg-pharmacy-100 rounded-2xl flex items-center justify-center mb-6 text-pharmacy-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-pharmacy-900 mb-3">24/7 Support</h3>
+                    <p class="text-pharmacy-700">Dedicated assistance round the clock to ensure your peace of mind.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div class="reveal">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1550831107-1553da8c8464?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pharmacist smiling" class="w-full object-cover">
+                        <div class="absolute inset-0 bg-pharmacy-600/20 mix-blend-multiply"></div>
+                    </div>
+                </div>
+                <div class="mt-12 lg:mt-0 reveal delay-200">
+                    <h2 class="text-3xl font-extrabold text-pharmacy-950 sm:text-4xl mb-6">Committed to Your Health and Happiness</h2>
+                    <p class="text-lg text-pharmacy-800 mb-6">
+                        At Aqable Branch 2, we believe that health should be accessible and affordable for everyone. For over a decade, our experienced pharmacists have been providing reliable medical advice and premium products.
+                    </p>
+                    <p class="text-lg text-pharmacy-800 mb-8">
+                        Our emphasis on quality, trust, and speed makes us the preferred pharmacy network in your area.
+                    </p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-pharmacy-100 flex items-center justify-center border border-pharmacy-200">
+                                <svg class="h-4 w-4 text-pharmacy-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            </div>
+                            <span class="ml-3 font-semibold text-pharmacy-900">100% Certified Medications</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-pharmacy-100 flex items-center justify-center border border-pharmacy-200">
+                                <svg class="h-4 w-4 text-pharmacy-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            </div>
+                            <span class="ml-3 font-semibold text-pharmacy-900">Highly Trained Pharmacists</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-pharmacy-100 flex items-center justify-center border border-pharmacy-200">
+                                <svg class="h-4 w-4 text-pharmacy-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            </div>
+                            <span class="ml-3 font-semibold text-pharmacy-900">Affordable Pricing guaranteed</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-pharmacy-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-3xl font-extrabold text-pharmacy-950 sm:text-4xl">Get in Touch</h2>
+                <div class="w-24 h-1.5 bg-pharmacy-500 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-4 text-lg text-pharmacy-800">We respond to every message as quickly as possible.</p>
+            </div>
+
+            <div class="lg:grid lg:grid-cols-2 lg:gap-12 bg-white rounded-3xl overflow-hidden shadow-xl border border-pharmacy-100 reveal">
+                <!-- Info & Map -->
+                <div class="bg-pharmacy-600 p-10 text-white flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-pharmacy-500 rounded-full blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                        <p class="text-pharmacy-100 mb-8">Reach out to us directly or visit our branch anytime.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-pharmacy-200 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <div class="ml-4">
+                                    <h4 class="font-bold">Address</h4>
+                                    <p class="text-pharmacy-100">123 Health Ave, Medical District<br>City Center, Country</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-pharmacy-200 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <div class="ml-4">
+                                    <h4 class="font-bold">Phone</h4>
+                                    <p class="text-pharmacy-100">+1 (234) 567-8900</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-pharmacy-200 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                <div class="ml-4">
+                                    <h4 class="font-bold">Email</h4>
+                                    <p class="text-pharmacy-100">info@aqablebranch2.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Placeholder -->
+                    <div class="mt-12 bg-pharmacy-700/50 h-48 rounded-xl border border-pharmacy-500 flex items-center justify-center relative z-10">
+                        <span class="text-pharmacy-200 font-medium tracking-wider uppercase text-sm">Interactive Map</span>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="p-10">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-bold text-pharmacy-900 mb-1">Full Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-xl border border-pharmacy-200 focus:ring-2 focus:ring-pharmacy-500 focus:border-transparent outline-none transition-all bg-pharmacy-50" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-pharmacy-900 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-xl border border-pharmacy-200 focus:ring-2 focus:ring-pharmacy-500 focus:border-transparent outline-none transition-all bg-pharmacy-50" placeholder="john@example.com" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-bold text-pharmacy-900 mb-1">Your Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-xl border border-pharmacy-200 focus:ring-2 focus:ring-pharmacy-500 focus:border-transparent outline-none transition-all bg-pharmacy-50 resize-none" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-pharmacy-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-pharmacy-700 shadow-lg shadow-pharmacy-600/20 hover:shadow-xl transition-all duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-pharmacy-950 text-white pt-16 pb-8 border-t-[6px] border-pharmacy-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-pharmacy-500 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </div>
+                        <span class="font-bold text-xl tracking-tight">Aqable Branch 2</span>
+                    </div>
+                    <p class="text-pharmacy-200 mb-6 leading-relaxed">Your health and well-being is our utmost priority. Trust us for high-quality medicines and excellent service every day.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-pharmacy-300 hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                        <a href="#" class="text-pharmacy-300 hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="#" class="text-pharmacy-300 hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Home</a></li>
+                        <li><a href="#products" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Products</a></li>
+                        <li><a href="#services" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Services</a></li>
+                        <li><a href="#about" class="text-pharmacy-200 hover:text-white hover:underline transition-all">About Us</a></li>
+                        <li><a href="#contact" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Our Services</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-pharmacy-200">Prescription Filling</span></li>
+                        <li><span class="text-pharmacy-200">Health Consultations</span></li>
+                        <li><span class="text-pharmacy-200">Vitamins & Supplements</span></li>
+                        <li><span class="text-pharmacy-200">First Aid Supplies</span></li>
+                        <li><span class="text-pharmacy-200">Medical Devices</span></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Newsletter</h4>
+                    <p class="text-pharmacy-200 mb-4">Subscribe to receive health tips and exclusive offers.</p>
+                    <form class="flex" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+                        <input type="email" class="w-full px-4 py-2 rounded-l-lg bg-pharmacy-900 border border-pharmacy-800 text-white focus:outline-none focus:border-pharmacy-500" placeholder="Email address" required>
+                        <button type="submit" class="bg-pharmacy-600 hover:bg-pharmacy-500 px-4 py-2 rounded-r-lg font-bold transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-pharmacy-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-pharmacy-400 text-sm mb-4 md:mb-0">&copy; 2026 Aqable Branch 2. All rights reserved.</p>
+                <div class="flex space-x-6 text-sm">
+                    <a href="#" class="text-pharmacy-400 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-pharmacy-400 hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                });
+            });
+
+            // Cart Counter Logic
+            let cartCount = 0;
+            const updateCartCounters = () => {
+                cartCount++;
+                const desktopCounter = document.getElementById('cart-counter');
+                const mobileCounter = document.getElementById('mobile-cart-counter');
+                
+                desktopCounter.innerText = cartCount;
+                mobileCounter.innerText = cartCount;
+                
+                // Pop animation
+                [desktopCounter, mobileCounter].forEach(el => {
+                    el.classList.add('scale-150');
+                    setTimeout(() => el.classList.remove('scale-150'), 200);
+                });
+                
+                // Simple feedback
+                alert('Item carefully added to your cart!');
+            };
+
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', updateCartCounters);
+            });
+
+            // Form Validation and Submission handling (Basic)
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const message = document.getElementById('message').value.trim();
+
+                    if (name && email && message) {
+                        alert(`Thank you, ${name}! Your secure message has been sent. We'll be in touch soon.`);
+                        contactForm.reset();
+                    }
+                });
+            }
+
+            // Scroll Reveal Animation Intersection Observer
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                });
+            }, revealOptions);
+            
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+            
+            // Initial check just in case top elements are already visible
+            setTimeout(() => {
+                reveals.forEach(reveal => {
+                    const rect = reveal.getBoundingClientRect();
+                    if(rect.top < window.innerHeight) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }, 100);
+
+            // Navbar shadow & glass effect on scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('shadow-lg');
+                    navbar.classList.remove('shadow-[0_4px_30px_rgba(22,163,74,0.1)]');
+                } else {
+                    navbar.classList.remove('shadow-lg');
+                    navbar.classList.add('shadow-[0_4px_30px_rgba(22,163,74,0.1)]');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
