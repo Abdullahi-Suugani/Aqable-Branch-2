@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqable Branch 2 - Leadership Dashboard</title>
+    <meta name="description" content="Meet the leadership team behind Aqable Branch 2. Trusted professionals dedicated to your health.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pharmacy: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; }
+        
+        /* Custom scrollbar matching theme */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f0fdf4; }
+        ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #15803d; }
+        
+        /* Glass effect for navbar */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+    </style>
+</head>
+<body class="bg-white text-pharmacy-950 antialiased selection:bg-pharmacy-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav border-b border-pharmacy-100 shadow-[0_4px_30px_rgba(22,163,74,0.1)] transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="window.location.href='index.html'">
+                    <div class="w-10 h-10 bg-pharmacy-600 rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-pharmacy-600/30 group-hover:bg-pharmacy-700 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s10 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-3H8v-2h3V9h2v3h3v2h-3v3z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-2xl text-pharmacy-900 tracking-tight group-hover:text-pharmacy-700 transition-colors">Aqable Branch 2</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html#home" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Home</a>
+                    <a href="index.html#products" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Products</a>
+                    <a href="index.html#services" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Services</a>
+                    <a href="dashboard.html" class="text-pharmacy-600 font-bold transition-colors">Leadership</a>
+                    <a href="index.html#contact" class="text-pharmacy-800 hover:text-pharmacy-600 font-medium transition-colors">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-pharmacy-800 hover:text-pharmacy-600 focus:outline-none bg-pharmacy-50 rounded-lg p-2 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-pharmacy-100 shadow-[0_10px_20px_rgba(22,163,74,0.1)] absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html#home" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Home</a>
+                <a href="index.html#products" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Products</a>
+                <a href="index.html#services" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Services</a>
+                <a href="dashboard.html" class="mobile-link block px-4 py-3 rounded-xl text-base font-bold text-pharmacy-600 bg-pharmacy-50 transition-colors">Leadership</a>
+                <a href="index.html#contact" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-pharmacy-900 hover:text-pharmacy-700 hover:bg-pharmacy-50 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="pt-32 pb-20 lg:pt-40 lg:pb-24 bg-pharmacy-600 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="absolute right-0 top-0 transform translate-x-1/3 -translate-y-1/4 text-white" width="404" height="404" fill="currentColor" viewBox="0 0 404 404" aria-hidden="true">
+                <defs><pattern id="dots-header" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="4" height="4" fill="currentColor"></rect></pattern></defs>
+                <rect width="404" height="404" fill="url(#dots-header)"></rect>
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal active">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Aqable Branch 2 – Leadership Dashboard</h1>
+            <p class="text-xl md:text-2xl text-pharmacy-100 font-medium">Trusted Leadership and Professional Excellence</p>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="py-16 bg-pharmacy-50 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Tabs (Optional toggle effect implemented via sticky nav) -->
+            <div class="flex justify-center space-x-4 mb-12 reveal delay-100 active">
+                <a href="#owners" class="px-6 py-2 rounded-full bg-white text-pharmacy-700 font-bold shadow-sm border border-pharmacy-200 hover:bg-pharmacy-600 hover:text-white transition-colors">Owners</a>
+                <a href="#experience" class="px-6 py-2 rounded-full bg-white text-pharmacy-700 font-bold shadow-sm border border-pharmacy-200 hover:bg-pharmacy-600 hover:text-white transition-colors">Experience</a>
+                <a href="#history" class="px-6 py-2 rounded-full bg-white text-pharmacy-700 font-bold shadow-sm border border-pharmacy-200 hover:bg-pharmacy-600 hover:text-white transition-colors">Our Story</a>
+            </div>
+
+            <!-- Owners Section -->
+            <section id="owners" class="mb-24 scroll-mt-24">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- Owner 1 -->
+                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-pharmacy-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 reveal">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-40 h-40 rounded-full border-4 border-pharmacy-100 shadow-md overflow-hidden mb-6 relative group">
+                                <img src="./images/owner_mohamed.png" alt="Dr. Mohamed Adan Abdirahmaan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 rounded-full shadow-inner pointer-events-none"></div>
+                            </div>
+                            <h2 class="text-2xl font-extrabold text-pharmacy-900 mb-1">Mhamed Adan Abdirahmaan</h2>
+                            <p class="text-pharmacy-600 font-bold mb-4 uppercase tracking-wider text-sm">PhD Doctor</p>
+                            <div class="w-12 h-1 bg-pharmacy-500 rounded-full mb-6"></div>
+                            <p class="text-pharmacy-800 leading-relaxed">
+                                "Dr. Mohamed is the leading mind behind Aqable Branch 2, with over 25 years of experience in healthcare and pharmacy services. His expertise and vision drive the success and trust of the pharmacy."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Owner 2 -->
+                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-pharmacy-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 reveal delay-200">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-40 h-40 rounded-full border-4 border-pharmacy-100 shadow-md overflow-hidden mb-6 relative group">
+                                <img src="./images/owner_abdullahi.png" alt="Abdullahi Adan Abdirahmaan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 rounded-full shadow-inner pointer-events-none"></div>
+                            </div>
+                            <h2 class="text-2xl font-extrabold text-pharmacy-900 mb-1">Abdullahi Adan Abdirahmaan</h2>
+                            <p class="text-pharmacy-600 font-bold mb-4 uppercase tracking-wider text-sm">Co-Founder</p>
+                            <div class="w-12 h-1 bg-pharmacy-500 rounded-full mb-6"></div>
+                            <p class="text-pharmacy-800 leading-relaxed">
+                                "Abdullahi plays a key role in operations and development, ensuring the pharmacy delivers high-quality service, accessibility, and customer satisfaction."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience & Achievements -->
+            <section id="experience" class="mb-24 scroll-mt-24">
+                <h2 class="text-3xl font-extrabold text-pharmacy-950 text-center mb-12 reveal">Experience & Achievements</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Stat 1 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md border border-pharmacy-50 flex items-center reveal">
+                        <div class="w-16 h-16 rounded-xl bg-pharmacy-100 flex items-center justify-center text-pharmacy-600 mr-4 flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-pharmacy-900">25+ Years</h3>
+                            <p class="text-pharmacy-700">Experience</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stat 2 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md border border-pharmacy-50 flex items-center reveal delay-100">
+                        <div class="w-16 h-16 rounded-xl bg-pharmacy-100 flex items-center justify-center text-pharmacy-600 mr-4 flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-pharmacy-900">Medical Expertise</h3>
+                            <p class="text-pharmacy-700">Professional Standards</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stat 3 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md border border-pharmacy-50 flex items-center reveal delay-200">
+                        <div class="w-16 h-16 rounded-xl bg-pharmacy-100 flex items-center justify-center text-pharmacy-600 mr-4 flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-pharmacy-900">Trusted Service</h3>
+                            <p class="text-pharmacy-700">Community Focused</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history" class="bg-white rounded-3xl p-10 lg:p-16 shadow-xl border border-pharmacy-100 reveal scroll-mt-24 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-pharmacy-50 rounded-full blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-extrabold text-pharmacy-950 mb-6">Our Story</h2>
+                    <div class="w-16 h-1.5 bg-pharmacy-500 rounded-full mb-8"></div>
+                    <p class="text-xl text-pharmacy-800 leading-relaxed font-light">
+                        "Aqable Branch 2 was founded with a vision to provide reliable, affordable, and high-quality medical products to the community. Under the leadership of experienced professionals, the pharmacy has grown into a trusted healthcare provider known for excellence and care."
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-pharmacy-950 text-white pt-16 pb-8 border-t-[6px] border-pharmacy-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-pharmacy-500 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </div>
+                        <span class="font-bold text-xl tracking-tight">Aqable Branch 2</span>
+                    </div>
+                    <p class="text-pharmacy-200 mb-6 leading-relaxed">Your health and well-being is our utmost priority. Trust us for high-quality medicines and excellent service every day.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#home" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Home</a></li>
+                        <li><a href="index.html#products" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Products</a></li>
+                        <li><a href="index.html#services" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Services</a></li>
+                        <li><a href="dashboard.html" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Leadership Dashboard</a></li>
+                        <li><a href="index.html#contact" class="text-pharmacy-200 hover:text-white hover:underline transition-all">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Our Services</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-pharmacy-200">Prescription Filling</span></li>
+                        <li><span class="text-pharmacy-200">Health Consultations</span></li>
+                        <li><span class="text-pharmacy-200">Vitamins & Supplements</span></li>
+                        <li><span class="text-pharmacy-200">First Aid Supplies</span></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white">Contact</h4>
+                    <p class="text-pharmacy-200 mb-2">123 Health Ave, Medical District</p>
+                    <p class="text-pharmacy-200 mb-2">+1 (234) 567-8900</p>
+                    <p class="text-pharmacy-200">info@aqablebranch2.com</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-pharmacy-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-pharmacy-400 text-sm mb-4 md:mb-0">&copy; 2026 Aqable Branch 2. All rights reserved.</p>
+                <div class="flex space-x-6 text-sm">
+                    <a href="#" class="text-pharmacy-400 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-pharmacy-400 hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    menuIcon.classList.toggle('hidden');
+                    closeIcon.classList.toggle('hidden');
+                });
+            }
+
+            // Scroll Reveal Animation Intersection Observer
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                });
+            }, revealOptions);
+            
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+            
+            // Initial check
+            setTimeout(() => {
+                reveals.forEach(reveal => {
+                    const rect = reveal.getBoundingClientRect();
+                    if(rect.top < window.innerHeight) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }, 100);
+
+            // Navbar shadow & glass effect on scroll
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 20) {
+                        navbar.classList.add('shadow-lg');
+                        navbar.classList.remove('shadow-[0_4px_30px_rgba(22,163,74,0.1)]');
+                    } else {
+                        navbar.classList.remove('shadow-lg');
+                        navbar.classList.add('shadow-[0_4px_30px_rgba(22,163,74,0.1)]');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
