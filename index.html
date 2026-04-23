@@ -507,6 +507,31 @@
         </div>
     </footer>
 
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-pharmacy-100 flex justify-between items-center bg-pharmacy-50">
+            <h2 class="text-2xl font-bold text-pharmacy-900">Your Cart</h2>
+            <button id="close-cart-btn" class="text-pharmacy-600 hover:text-pharmacy-800 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="text-center text-pharmacy-500 mt-10" id="empty-cart-msg">Your cart is empty.</div>
+        </div>
+        <div class="p-6 border-t border-pharmacy-100 bg-pharmacy-50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-lg font-bold text-pharmacy-900">Total:</span>
+                <span id="cart-total" class="text-2xl font-extrabold text-pharmacy-600">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="w-full bg-pharmacy-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-pharmacy-700 shadow-lg shadow-pharmacy-600/20 transition-all duration-300">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -531,28 +556,124 @@
                 });
             });
 
-            // Cart Counter Logic
-            let cartCount = 0;
-            const updateCartCounters = () => {
-                cartCount++;
-                const desktopCounter = document.getElementById('cart-counter');
-                const mobileCounter = document.getElementById('mobile-cart-counter');
+            // Real Cart System Logic
+            let cart = [];
+            const desktopCounter = document.getElementById('cart-counter');
+            const mobileCounter = document.getElementById('mobile-cart-counter');
+            
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalEl = document.getElementById('cart-total');
+            const emptyCartMsg = document.getElementById('empty-cart-msg');
+            
+            const openCart = () => {
+                cartSidebar.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => cartOverlay.classList.remove('opacity-0'), 10);
+            };
+            
+            const closeCart = () => {
+                cartSidebar.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0');
+                setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+            };
+
+            document.getElementById('close-cart-btn').addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+            
+            document.querySelectorAll('button[aria-label="Cart"]').forEach(btn => {
+                btn.addEventListener('click', openCart);
+            });
+
+            const updateCartUI = () => {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                desktopCounter.innerText = totalItems;
+                mobileCounter.innerText = totalItems;
                 
-                desktopCounter.innerText = cartCount;
-                mobileCounter.innerText = cartCount;
+                if(totalItems > 0) {
+                    [desktopCounter, mobileCounter].forEach(el => {
+                        el.classList.add('scale-150');
+                        setTimeout(() => el.classList.remove('scale-150'), 200);
+                    });
+                }
+
+                if (cart.length === 0) {
+                    emptyCartMsg.style.display = 'block';
+                    cartItemsContainer.innerHTML = '';
+                    cartItemsContainer.appendChild(emptyCartMsg);
+                    cartTotalEl.innerText = '$0.00';
+                    return;
+                }
                 
-                // Pop animation
-                [desktopCounter, mobileCounter].forEach(el => {
-                    el.classList.add('scale-150');
-                    setTimeout(() => el.classList.remove('scale-150'), 200);
+                emptyCartMsg.style.display = 'none';
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+
+                cart.forEach((item, index) => {
+                    total += item.price * item.quantity;
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex items-center gap-4 bg-white p-3 rounded-xl border border-pharmacy-100 shadow-sm';
+                    itemEl.innerHTML = `
+                        <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg bg-pharmacy-50">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-pharmacy-900 text-sm leading-tight mb-1">${item.name}</h4>
+                            <div class="text-pharmacy-600 font-bold text-sm">$${item.price.toFixed(2)}</div>
+                        </div>
+                        <div class="flex flex-col items-center gap-1">
+                            <div class="flex items-center bg-pharmacy-50 rounded-lg border border-pharmacy-100">
+                                <button class="px-2 py-1 text-pharmacy-600 hover:text-pharmacy-900 font-bold" onclick="updateQuantity(${index}, -1)">-</button>
+                                <span class="px-2 text-sm font-bold text-pharmacy-900">${item.quantity}</span>
+                                <button class="px-2 py-1 text-pharmacy-600 hover:text-pharmacy-900 font-bold" onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <button class="text-xs text-red-500 hover:text-red-700 font-medium" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemEl);
                 });
-                
-                // Simple feedback
-                alert('Item carefully added to your cart!');
+
+                cartTotalEl.innerText = '$' + total.toFixed(2);
+            };
+
+            window.updateQuantity = (index, change) => {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                updateCartUI();
+            };
+
+            window.removeFromCart = (index) => {
+                cart.splice(index, 1);
+                updateCartUI();
             };
 
             document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-                btn.addEventListener('click', updateCartCounters);
+                btn.addEventListener('click', (e) => {
+                    const card = e.target.closest('.group');
+                    const name = card.querySelector('h3').innerText;
+                    const priceStr = card.querySelector('.text-2xl').innerText;
+                    const price = parseFloat(priceStr.replace('$', ''));
+                    const img = card.querySelector('img').src;
+
+                    const existingItem = cart.find(i => i.name === name);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({ name, price, img, quantity: 1 });
+                    }
+                    
+                    updateCartUI();
+                    openCart();
+                });
+            });
+
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                if(cart.length > 0) {
+                    alert('Proceeding to secure checkout...');
+                } else {
+                    alert('Your cart is empty.');
+                }
             });
 
             // Form Validation and Submission handling (Basic)
