@@ -488,8 +488,8 @@
                 <div>
                     <h4 class="text-lg font-bold mb-6 text-white">Newsletter</h4>
                     <p class="text-pharmacy-200 mb-4">Subscribe to receive health tips and exclusive offers.</p>
-                    <form class="flex" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
-                        <input type="email" class="w-full px-4 py-2 rounded-l-lg bg-pharmacy-900 border border-pharmacy-800 text-white focus:outline-none focus:border-pharmacy-500" placeholder="Email address" required>
+                    <form id="newsletter-form" class="flex">
+                        <input id="newsletter-email" name="email" type="email" class="w-full px-4 py-2 rounded-l-lg bg-pharmacy-900 border border-pharmacy-800 text-white focus:outline-none focus:border-pharmacy-500" placeholder="Email address" required>
                         <button type="submit" class="bg-pharmacy-600 hover:bg-pharmacy-500 px-4 py-2 rounded-r-lg font-bold transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </button>
@@ -535,6 +535,23 @@
     <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+
+            const postJson = async (path, payload) => {
+                const response = await fetch(`${API_BASE_URL}${path}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Request failed. Please try again.');
+                }
+
+                return data;
+            };
+
             // Mobile Menu Toggle
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -668,9 +685,17 @@
                 });
             });
 
-            document.getElementById('checkout-btn').addEventListener('click', () => {
+            document.getElementById('checkout-btn').addEventListener('click', async () => {
                 if(cart.length > 0) {
-                    alert('Proceeding to secure checkout...');
+                    try {
+                        await postJson('/api/orders', { items: cart });
+                        alert('Your order has been saved. We will contact you soon.');
+                        cart = [];
+                        updateCartUI();
+                        closeCart();
+                    } catch (error) {
+                        alert(error.message);
+                    }
                 } else {
                     alert('Your cart is empty.');
                 }
@@ -679,15 +704,36 @@
             // Form Validation and Submission handling (Basic)
             const contactForm = document.getElementById('contact-form');
             if (contactForm) {
-                contactForm.addEventListener('submit', (e) => {
+                contactForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const name = document.getElementById('name').value.trim();
                     const email = document.getElementById('email').value.trim();
                     const message = document.getElementById('message').value.trim();
 
                     if (name && email && message) {
-                        alert(`Thank you, ${name}! Your secure message has been sent. We'll be in touch soon.`);
-                        contactForm.reset();
+                        try {
+                            await postJson('/api/contact', { name, email, message });
+                            alert(`Thank you, ${name}! Your secure message has been sent. We'll be in touch soon.`);
+                            contactForm.reset();
+                        } catch (error) {
+                            alert(error.message);
+                        }
+                    }
+                });
+            }
+
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('newsletter-email').value.trim();
+
+                    try {
+                        await postJson('/api/newsletter', { email });
+                        alert('Subscribed successfully!');
+                        newsletterForm.reset();
+                    } catch (error) {
+                        alert(error.message);
                     }
                 });
             }
